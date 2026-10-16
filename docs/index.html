@@ -1,0 +1,34 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قوافي القرآن</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#062a1f"><link rel="icon" href="icon-192.png">
+<style>@font-face{font-family:A;src:url(Amiri.ttf)}*{box-sizing:border-box}body{margin:0;font-family:A,serif;background:#062a1f;color:#e8fff3}
+header{position:sticky;top:0;background:#062a1f;padding:10px;border-bottom:1px solid #1d5e45;z-index:2}h1{margin:0 0 8px;font-size:24px;color:#a8f0c8;text-align:center}
+.tabs{display:flex;gap:6px}.tabs button{flex:1;padding:9px;font:inherit;font-size:18px;border:0;border-radius:10px;background:#0d3d2d;color:#bfe9d3}.tabs .on{background:#1f7a55;color:#fff}
+input{width:100%;margin-top:8px;padding:10px;font:inherit;font-size:18px;border-radius:10px;border:1px solid #1d5e45;background:#0a3326;color:#e8fff3}
+main{padding:10px}.f{background:#0a3326;border-radius:12px;margin-bottom:8px;padding:10px}.f h3{margin:0;cursor:pointer;color:#a8f0c8;display:flex;justify-content:space-between}
+.c{color:#7fc9a5;font-size:15px}.a{padding:8px;border-top:1px solid #154a37;cursor:pointer;line-height:1.9;font-size:19px}.r{color:#7fc9a5;font-size:14px}
+#m{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:14px;z-index:5}#m div{background:#0d3d2d;border-radius:14px;padding:16px;max-height:85vh;overflow:auto;width:100%;max-width:600px}
+#m .t{font-size:26px;line-height:2.1}#m .tr{direction:ltr;text-align:left;color:#bfe9d3;margin-top:10px}#m button{margin-top:12px;width:100%;padding:10px;font:inherit;border:0;border-radius:10px;background:#1f7a55;color:#fff}</style></head>
+<body><header><h1>قوافي القرآن</h1><div class="tabs"><button id="t0" class="on" onclick="tab(0)">القوافي</button><button id="t1" onclick="tab(1)">الافتتاحيات</button></div>
+<input id="q" placeholder="ابحث: ١٠٥:١ أو حروف عربية" oninput="draw()"></header><main id="L"></main>
+<div id="m" onclick="if(event.target==this)home()"><div><div class="r" id="mr"></div><div class="t" id="mt"></div><div class="tr" id="mtr"></div><button onclick="home()">إغلاق</button></div></div>
+<script src="data.js"></script><script>
+var cur=0,open={};function ay(r){var p=r.split(':');return Q[p[0]-1][p[1]-1]}
+function ar(n){return String(n).replace(/\d/g,function(d){return'٠١٢٣٤٥٦٧٨٩'[d]})}
+function lab(r){var p=r.split(':');return N[p[0]-1]+' • '+ar(p[1])}
+function strip(s){return s.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[ٱأإآ]/g,'ا')}
+function norm(s){return s.replace(/[٠-٩]/g,function(d){return'٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace(/[\s.،]+/,':').trim()}
+function tab(i){cur=i;open={};t0.className=i?'':'on';t1.className=i?'on':'';draw()}
+function row(r){return'<div class="a" onclick="show(\''+r+'\')"><span class="r">'+lab(r)+'</span><br>'+ay(r)+'</div>'}
+function draw(){var q=q_(),h='',keys=cur?Object.keys(O):Object.keys(R),n=0;
+ keys.forEach(function(k){var refs=cur?O[k]:R[k].map(function(x){return x.ref});
+  if(q.ref){refs=refs.filter(function(r){return r==q.ref});if(!refs.length)return}
+  else if(q.s&&strip(k).indexOf(q.s)<0){var m=refs.filter(function(r){return strip(ay(r)).indexOf(q.s)>=0});if(!m.length)return;refs=m}
+  if(n++>150)return;var o=open[k]||q.ref||(q.s&&n<4);
+  h+='<div class="f"><h3 onclick="tg(\''+k+'\')"><span>'+k+'</span><span class="c">'+ar(refs.length)+' آية</span></h3>'+(o?refs.slice(0,300).map(row).join(''):'')+'</div>'});
+ L.innerHTML=h||'<p style="text-align:center">لا نتائج</p>'}
+function q_(){var v=norm(q.value);if(/^\d+:\d+$/.test(v))return{ref:v};return{s:strip(q.value.trim())}}
+function tg(k){open[k]=!open[k];draw()}
+function show(r){mr.textContent=lab(r);mt.textContent=ay(r);var p=r.split(':');mtr.textContent=T[p[0]-1][p[1]-1];m.style.display='flex'}
+function home(){m.style.display='none'}draw();
+if('serviceWorker'in navigator&&location.protocol.indexOf('http')==0)navigator.serviceWorker.register('sw.js');
+</script></body></html>
