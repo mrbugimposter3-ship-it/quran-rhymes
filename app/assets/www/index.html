@@ -7,11 +7,19 @@ input{width:100%;margin-top:8px;padding:10px;font:inherit;font-size:18px;border-
 main{padding:10px}.f{background:#0a3326;border-radius:12px;margin-bottom:8px;padding:10px}.f h3{margin:0;cursor:pointer;color:#a8f0c8;display:flex;justify-content:space-between}
 .c{color:#7fc9a5;font-size:15px}.a{padding:8px;border-top:1px solid #154a37;cursor:pointer;line-height:1.9;font-size:19px}.r{color:#7fc9a5;font-size:14px}
 #m{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:14px;z-index:5}#m div{background:#0d3d2d;border-radius:14px;padding:16px;max-height:85vh;overflow:auto;width:100%;max-width:600px}
-#m .t{font-size:26px;line-height:2.1}#m .tr{direction:ltr;text-align:left;color:#bfe9d3;margin-top:10px}#m button{margin-top:12px;width:100%;padding:10px;font:inherit;border:0;border-radius:10px;background:#1f7a55;color:#fff}</style></head>
+#m .t{font-size:26px;line-height:2.1}#m .tr{direction:ltr;text-align:left;color:#bfe9d3;margin-top:10px}#m button{margin-top:12px;width:100%;padding:10px;font:inherit;border:0;border-radius:10px;background:#1f7a55;color:#fff}footer{padding:0 10px calc(16px + env(safe-area-inset-bottom));max-width:900px;margin:8px auto 0}
+.infaq{background:#0a3326;border:1px solid #1d5e45;border-radius:12px;padding:10px}
+.infaq-h{display:flex;align-items:center;gap:6px}.infaq-t{flex:1;color:#a8f0c8;font-size:20px}.infaq-nav{display:flex;gap:6px}
+.infaq-b{border:0;border-radius:10px;background:#0d3d2d;color:#bfe9d3;font:inherit;font-size:20px;padding:2px 14px;min-height:40px;cursor:pointer}
+.infaq-ar{display:block;font-size:21px;line-height:2}.infaq-ref{display:block;color:#7fc9a5;font-size:14px}
+.infaq-all summary{cursor:pointer;color:#a8f0c8;margin-top:6px}.infaq-all p{border-top:1px solid #154a37;margin:6px 0;padding-top:6px}
+.infaq-src{font-size:12px;color:#7fc9a5;opacity:.8;margin-top:6px}
+.infaq-tools{display:block;margin:12px 0 0;padding:8px 10px;font-size:14px;color:#bfe9d3;border:1px dashed #1d5e45;border-radius:10px}.infaq-tools a{color:#a8f0c8}</style></head>
 <body><header><h1>قوافي القرآن</h1><div class="tabs"><button id="t0" class="on" onclick="tab(0)">القوافي</button><button id="t1" onclick="tab(1)">الافتتاحيات</button></div>
 <input id="q" placeholder="ابحث: ١٠٥:١ أو حروف عربية" oninput="draw()"></header><main id="L"></main>
+<footer><section id="infaq"></section><p id="tools"></p></footer>
 <div id="m" onclick="if(event.target==this)home()"><div><div class="r" id="mr"></div><div class="t" id="mt"></div><div class="tr" id="mtr"></div><button onclick="home()">إغلاق</button></div></div>
-<script src="data.js"></script><script>
+<script src="data.js"></script><script src="infaq.js"></script><script>
 var cur=0,open={};function ay(r){var p=r.split(':');return Q[p[0]-1][p[1]-1]}
 function ar(n){return String(n).replace(/\d/g,function(d){return'٠١٢٣٤٥٦٧٨٩'[d]})}
 function lab(r){var p=r.split(':');return N[p[0]-1]+' • '+ar(p[1])}
@@ -30,5 +38,6 @@ function q_(){var v=norm(q.value);if(/^\d+:\d+$/.test(v))return{ref:v};return{s:
 function tg(k){open[k]=!open[k];draw()}
 function show(r){mr.textContent=lab(r);mt.textContent=ay(r);var p=r.split(':');mtr.textContent=T[p[0]-1][p[1]-1];m.style.display='flex'}
 function home(){m.style.display='none'}draw();
+infaqMount(document.getElementById('infaq'));infaqTools(document.getElementById('tools'));
 if('serviceWorker'in navigator&&location.protocol.indexOf('http')==0)navigator.serviceWorker.register('sw.js');
 </script></body></html>
